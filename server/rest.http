@@ -1,0 +1,21 @@
+POST  http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+    "username":"Olush",
+    "password": "now123"
+}
+
+###
+POST   http://localhost:5000/api/register
+Content-Type: application/json
+
+{
+    "username":"Olushola",
+    "email":"abiona",
+    "password": "now123"
+}
+
+
+###
+POST  http://localhost:5000/api/signout/3
