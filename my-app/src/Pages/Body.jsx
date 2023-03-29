@@ -1,11 +1,16 @@
 import React from 'react'
+import { useContext } from 'react'
+import { blogContext } from '../Hooks/BlogContext'
 import Data from './Data'
-import Alldata from './rawdata'
 
 export default function Body() {
+
+  const {blog, error} = useContext(blogContext)
+
+  // console.log(blog)
   return (
     <div className='body'>
-      {Alldata.map((el,i)=>{
+      {blog.slice(1,5).map((el,i)=>{
         return(
             <Data key={i} data={el} />
         )

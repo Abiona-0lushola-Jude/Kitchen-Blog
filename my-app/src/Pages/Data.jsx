@@ -1,9 +1,34 @@
 import React from 'react'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { userContext } from '../Hooks/UserContext'
 import pic from '../Style/image-jeanette.jpg'
 
 export default function Data({data}) {
 
-  // console.table(data)
+  const {getUser} = useContext(userContext)
+
+  const navigate = useNavigate()
+  
+  function handleMore(id){
+    console.log(id)
+    navigate(`/fullBlog/${data.username}/${id}`)
+    
+  }
+
+  function handleMove(id){
+
+    // console.log(id)
+    getUser(id)
+    navigate('/user/profile/'+data.username)
+  }
+
+
+  function getText(html){
+    const doc = new DOMParser().parseFromString(html, "text/html")
+    return doc.body.textContent
+  }
+
   return (
     <div className='blog-card'>
       <div className="blog-img">
@@ -11,21 +36,21 @@ export default function Data({data}) {
       </div>
       <div className="blog">
         <div className="content">
-          <h1 className='blog-title'>How to make Eba for the family</h1>
+          <h1 className='blog-title'>{data.title}</h1>
           <p className="blog-summary">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit laborum dicta iure ad quidem quas natus debitis, praesentium eum numquam error nihil, aperiam illo nesciunt obcaecati porro vero amet? Fuga.
+            {getText(data.desc)}
           </p>
           <div className="btn">
-            <button>Read More</button>
+            <button onClick={() =>handleMore(data.blog_id)}>Read More</button>
           </div>
         </div>
         <div className="user-file">
           <div className="user-img">
-            <img src={pic} alt="pic" />
+            <img src={pic} alt="pic" onClick={()=> handleMove(data.user_id)} />
           </div>
           <div className="user-detail">
-            <p className="username">Adetiloye</p>
-            <p className="date-taken">11-20-2022</p>
+            <p className="username">{data.username}</p>
+            <p className="date-taken">{data.date}</p>
           </div>
         </div>
       </div>

@@ -15,4 +15,10 @@ router.post('/register', userController.regsiterUser)
 router.post('/signout/:id', userController.signout)
 
 
+// getting one user
+router.get('/getUser/:id', userController.getUser)
+
+
+router.get('/profile', userController.confirmUser)
+
 module.exports = router

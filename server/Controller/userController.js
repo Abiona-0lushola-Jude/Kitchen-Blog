@@ -1,5 +1,8 @@
 const DB = require('../Database/Database')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const { json } = require('express')
+const secret = "newjmsmds"
 
 module.exports = {
     loginUser : async (req, res)=> {
@@ -7,7 +10,7 @@ module.exports = {
         const username = req.body.username
         const password = req.body.password
 
-        const firstQuery = "SELECT * FROM  kitchenblog.users WHERE  `username`= ? "
+        const firstQuery = "SELECT * FROM  kitchenblog.users WHERE  `email`= ?"
 
 
         await  DB.query(firstQuery, [username], async (err, data)=>{
@@ -15,7 +18,7 @@ module.exports = {
             try {
 
                  if(data.length === 0){
-                   return res.status(400).json({message: "user not registered!"})
+                   return res.status(400).json({message: "Email not registered!"})
                 }
 
                 
@@ -23,20 +26,19 @@ module.exports = {
                 const realPassword = await bcrypt.compare(password, data[0].password)
 
                 if(!realPassword){
-                    res.status(400).json({message: "Incorrect Password!"})
+                   return res.status(400).json({message: "Incorrect Password!"})
                 }
 
+                 await jwt.sign({user: username}, secret, {},async ( err, token)=>{
+                    if(err) throw err
 
-                await res.json({
-                    id:data[0].users_id,
-                    username: username
-                })
+                   await res.cookie('tokenId', token,{ httpOnly: true}).json(data)
+               })
+
+                
             } catch (err) {
                 console.log({message: err.message})
             }
-            // res.json(data)
-
-            // console.log(username)
            
         })
     },
@@ -71,10 +73,10 @@ module.exports = {
                     hashedPassword
                 ]
 
+                
+
                 DB.query(secondQuery, [values], async (err, data)=>{
                     if(err) return res.json({message: err.message})
-
-
                     res.json(data)
                 })
 
@@ -110,5 +112,47 @@ module.exports = {
             })
         })
 
+    },
+
+    getUser: async (req,res)=>{
+        const userId =  req.params.id
+        var user
+    
+        const q = "SELECT * FROM kitchenblog.users  WHERE `users_id` = ? "
+
+        await DB.query(q, [userId],async (err,data)=>{
+            if(err) return res,json({message: err.message})
+
+            user = data[0]
+            const secondQuery = "SELECT * FROM kitchenblog.blog WHERE `user_id` = ? "
+            
+            await DB.query(secondQuery,[userId], (err,data)=>{
+                if(err) return res.json({message : err.message})
+
+
+                res.json({data,user})
+            })
+        })
+    },
+
+    confirmUser: async(req,res)=>{
+        const{tokenId} =  req.cookies
+
+        if(tokenId){
+            jwt.verify(tokenId, secret, {}, (err, data)=>{
+                if(err) throw err
+                const query = "SELECT * FROM kitchenblog.users  WHERE `email` = ? "
+                DB.query(query, [data.user], async (err, data)=>{
+                    if (err) return res,json({message: err.message})
+
+
+                    res.json(data)
+                })
+
+            })
+        }else{
+            res.json(null)
+        }
     }
+
 }

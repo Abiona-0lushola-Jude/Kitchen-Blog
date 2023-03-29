@@ -2,7 +2,7 @@ POST  http://localhost:5000/api/login
 Content-Type: application/json
 
 {
-    "username":"Olush",
+    "username":"abiona@gmail",
     "password": "now123"
 }
 
@@ -11,11 +11,71 @@ POST   http://localhost:5000/api/register
 Content-Type: application/json
 
 {
-    "username":"Olushola",
-    "email":"abiona",
+    "username":"Olushola56",
+    "email":"abiona2",
     "password": "now123"
 }
+
+###
+GET  http://localhost:5000/api/getUser/6
 
 
 ###
 POST  http://localhost:5000/api/signout/3
+
+###
+
+POST   http://localhost:5000/change/changeUser/6
+Content-Type: application/json
+
+{
+    "newUsername":"Abiona Olushola J",
+    "location": "lagos, nigeria",
+    "website":"abiona"
+}
+
+###
+POST   http://localhost:5000/change/changePassword/9
+Content-Type: application/json
+
+{
+    "oldPassword":"now123",
+    "newPassword": "now123",
+    "confirmPassword":"now123"
+}
+
+###
+GET  http://localhost:5000/api/getAll
+
+###
+
+GET  http://localhost:5000/profile
+
+
+###
+GET http://localhost:5000/api/getOneBlog/3
+
+
+###
+POST  http://localhost:5000/api/postBlog
+Content-Type:  application/json
+
+{
+    "userId":"5",
+    "title":"Moving to my in your new house.",
+    "desc":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste nemo nostrum adipisci culpa inventore lorem egerfe ferivneirnfe reirnfgoernfe rvioerngjer ger iorfnieornerfe eriogneirngeirng reignjeirjgeirjge ngeingei0rgjerg eriger gejrg ei0rgejr gioerng0 officiis praesentium laboriosam odio, ipsam perspiciatis temporibus recusandae, beatae sapiente mollitia dolorem similique perferendis magnam accusantium quisquam quo expedita, aut suscipit veritatis molestias. Eius necessitatibus qui itaque alias odit expedita, voluptate quidem cupiditate neque, nobis accusantium ipsa inventore dolorem excepturi omnis non aliquam, quod nam similique quaerat rerum. Quas soluta beatae esse molestiae tempore itaque earum!",
+    "date":"2/4/2001",
+    "file":""
+}
+
+###
+PATCH   http://localhost:5000/api/updateBlog
+Content-Type:  application/json
+
+{
+    "blogId":"3",
+    "title":"Making Eba in your house now.",
+    "desc":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste nemo nostrum adipisci culpa inventore lorem egerfe ferivneirnfe reirnfgoernfe rvioerngjer ger iorfnieornerfe eriogneirngeirng reignjeirjgeirjge ngeingei0rgjerg eriger gejrg ei0rgejr gioerng0 officiis praesentium laboriosam odio, ipsam perspiciatis temporibus recusandae, beatae sapiente mollitia dolorem similique perferendis magnam accusantium quisquam quo expedita, aut suscipit veritatis molestias. Eius necessitatibus qui itaque alias odit expedita, voluptate quidem cupiditate neque, nobis accusantium ipsa inventore dolorem excepturi omnis non aliquam, quod nam similique quaerat rerum. Quas soluta beatae esse molestiae tempore itaque earum!",
+    "date":"2/4/2001",
+    "file":""
+}

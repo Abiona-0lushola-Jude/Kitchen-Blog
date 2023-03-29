@@ -1,9 +1,10 @@
 import React, {useContext, useState} from 'react'
-import { userContext } from '../Hooks/Register'
+import { useNavigate } from 'react-router-dom'
+import { userContext } from '../Hooks/UserContext'
 
 const Register = () => {
 
-  const {registerUser, error } = useContext(userContext)
+    const {registerUser, error, errMessage, userInfo} = useContext(userContext)
 
   const [ user, setUser] = useState({
     username:"",
@@ -12,6 +13,7 @@ const Register = () => {
   })
 
 
+  const navigate = useNavigate()
 
 
   function handleChange(e){
@@ -25,10 +27,15 @@ const Register = () => {
     })
   }
 
-  function handleSubmit(e){
+  async function handleSubmit(e){
     e.preventDefault()
+    try {
+      const res = await registerUser(user)
+    } catch (err) {
+      console.log(err)
+    }
 
-    registerUser(user)
+    error === false && navigate('/login')
   }
 
 
@@ -43,7 +50,7 @@ const Register = () => {
       <input type="password" name="password" id="password"  value={user.password}  onChange={handleChange}/>
       <button type="submit">Register</button>
       <p>You already have an account, <a href="/login">Login</a> </p>
-      {error && <p className="err">{error}</p>}
+      {error && <p className="err">{errMessage}</p>}
     </form>
   )
 }

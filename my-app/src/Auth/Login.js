@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react'
+import {  useState, useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { userContext } from '../Hooks/Register'
+import { userContext } from '../Hooks/UserContext'
 
 const Login = () => {
 
   // user context is ctored here
-  const {userInfo, error, loginUser} = useContext(userContext)
+  const { error, loginUser, errMessage, userInfo} = useContext(userContext)
 
   const [ user, setUser] = useState({
     username:"",
@@ -27,23 +27,25 @@ const Login = () => {
     })
   }
 
-   function handleSubmit(e){
-    e.preventDefault()
 
-     loginUser(user)
-    !userInfo && navigate('/home')
+   const handleSubmit = async (e)=> {
+    e.preventDefault()
+    if(user.username !== "" || user.password !== ""){
+      await loginUser(user)
+    } 
   }
+
 
   return (
     <form className='login' onSubmit={handleSubmit}>
        <h3>Login your account</h3>
-      <label htmlFor="username">Username</label>
+      <label htmlFor="username">Email</label>
       <input type="text" name="username" id="username" value={user.username} onChange={handleChange} />
       <label htmlFor="password">Password</label>
       <input type="password" name="password" id="password" value={user.password} onChange={handleChange} />
       <button type="submit">Log In</button>
       <p>You don't have an account, <a href="/register">Register</a></p>
-      {error && <p className="err">{error}</p>}
+      {error && <p className="err">{errMessage}</p>}
     </form>
   )
 }
