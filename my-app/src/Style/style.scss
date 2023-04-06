@@ -508,34 +508,34 @@
         }
         
         .userBlog{
+
             .contain{
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                gap: 3rem;
+                // align-items: center;
                 margin-block: 2rem;
                 padding-block: .6rem;
                 border-bottom: 1px solid lightgray;
                 
                 .userBlog-img{
-                    width: 20%;
-                    height: 10rem;
+                    width: 35rem;
+                    height: 13rem;
                     position: relative;
 
                     img{
                         width: 100%;
                         height: 100%;
-                        border: 1px solid teal;
                     }
                 }
 
                 .userBlog-img::before{
+                    top: -1rem;
+                    left: -1rem;
                     content: "";
-                    width: 12rem;
+                    width: 17rem;
                     height: inherit;
                     display: block;
                     position: absolute;
-                    top: -1.2rem;
-                    left: -1.2rem;
                     background-color: teal;
                     z-index: -3;
                 }
@@ -543,12 +543,21 @@
                 .userBlog{
                     width: 75%;
 
-                    h2{
-                        color: orangered;
+                    h1{
+                        color: teal;
                     }
 
+                    .desc{
+                        height: 7.8rem;
+                    }
                     p{
                         font-size: .9rem;
+                        text-align: justify;
+                        line-height: 1.6rem;
+                        color: slategray;
+                        margin-block:0 .9rem;
+                        text-overflow: clip;
+                        overflow: hidden;
                     }
 
                     .UserBtn{
@@ -565,8 +574,9 @@
 
                         button{
                             background-color: transparent;
-                            padding: .4rem .8rem;
-                            border-radius: .2rem;
+                            padding: .8rem 1.6rem;
+                            border-radius: .5rem;
+                            font-weight: 700;
                             outline: none;
                             border: none;
                             display: flex;
@@ -870,8 +880,8 @@
             .blog{
 
                 .content{
-
                     gap: 0;
+
                     h1{
                         font-size: 1.3rem;
                     }
@@ -925,18 +935,26 @@
 
                 .contain{
                     flex-direction: column;
-
-                    .userBlog-img{
-                        width: 80%;
-                    }
-
+                    width: 100%;
+                    
                     .userBlog{
-                        width: 100%;
 
-                        h2{
-                            margin-block: 1rem;
+                        .userBlog-img{
+                            display: none;
+
+                            .img{
+                                width: 4rem;
+                            }
                         }
 
+                        h1{
+                            margin-block: .5rem;
+                            font-size: 1.3rem;
+                        }
+
+                        p{
+                            font-size: .9rem;
+                        }
                         .UserBtn{
                             text-align: center;
                         }

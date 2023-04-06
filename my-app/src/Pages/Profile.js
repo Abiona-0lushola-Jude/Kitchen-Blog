@@ -86,11 +86,11 @@ const Profile = () => {
                     return(
                         <div key={i} className="contain">
                             <div className="userBlog-img">
-                                <img src={menu} alt="" />
+                                <img className='img' src={menu} alt="" />
                             </div>
                             <div className="userBlog">
-                                <h2>{el.title}</h2>
-                                <p>{getText(el.desc)}</p>
+                                <h1>{el.title}</h1>
+                                <p className='desc'>{getText(el.desc)}</p>
                                 <div className='UserBtn'>
                                     <p>{el.date}</p>
                                    {username === userName && <div className='Btn'>

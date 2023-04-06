@@ -28,6 +28,7 @@ export default function Data({data}) {
     const doc = new DOMParser().parseFromString(html, "text/html")
     return doc.body.textContent
   }
+  
 
   return (
     <div className='blog-card'>
