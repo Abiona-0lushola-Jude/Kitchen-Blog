@@ -39,10 +39,10 @@ function Topnav() {
         </div>
 
             <div className="menu" onClick={handleToggle}>
-                <RxHamburgerMenu className='meunBurger' fontSize={"1.5rem"}/>
+                <RxHamburgerMenu className='meunBurger' fontSize={"1.5rem"} style={{color:`${open? "black": "green"}`}}/>
             </div>
 
-        <div className={`navShow ${open && "open"}`}>
+        <div className={`navShow ${open && "open"}`} >
             
             <div className="nav">
                 <NavLink to='/allBlog/more'>All Blogs</NavLink>

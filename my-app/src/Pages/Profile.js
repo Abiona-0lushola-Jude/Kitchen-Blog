@@ -75,7 +75,7 @@ const Profile = () => {
                     <p><b>Website</b>: {webSite}</p>
                     <div className='userDisplay'>
                         <div className='backGround'>
-                            <button onClick={backGroundChnage}>Change Background</button>
+                            
                         </div>
                         {username === userName && <button className='editUser' onClick={()=> handleOnEditUser(userId)}>Edit user</button>}
                     </div>

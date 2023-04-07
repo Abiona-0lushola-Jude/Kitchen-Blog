@@ -51,7 +51,7 @@ const [blogUser, setBlogUser] = useState()
       const checkUser = async ()=>{
         const {data} = await axios.get('/api/profile')
         if(!userInfo){
-          setUsers([data[0].username, data[0].email, data[0].users_id])
+          setUsers([data[0]?.username, data[0]?.email, data[0]?.users_id])
         }
         
       }

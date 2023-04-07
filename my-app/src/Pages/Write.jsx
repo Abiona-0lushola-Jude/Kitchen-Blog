@@ -50,38 +50,37 @@ export default function Write() {
 
 
   // console.log(userInfo)
-  const upload = async ()=>{
-    try {
+  // const upload = async ()=>{
+  //   try {
 
-    const form = new FormData()
-    form.append("image", post.file)
-    const res = await axios.post('http://localhost:5000/upload', form)
-    console.log(res)
+  //   const form = new FormData()
+  //   form.append("image", post.file)
+  //   const res = await axios.post('http://localhost:5000/upload', form)
+  //   console.log(res)
 
-    } catch (err) {
-      console.log(err.message)
+  //   } catch (err) {
+  //     console.log(err.message)
 
-    }
-  }
+  //   }
+  // }
 
 
 
   function handleSubmit(e){
     e.preventDefault()
-    upload()
 
-      // if(userInfo=== null){
-      //   return navigate('/register')
-      // }
+      if(userInfo=== null){
+        return navigate('/register')
+      }
 
-    // const allPost = {
-    //   ...post,
-    //   userId:userInfo[2],
-    //   date:confirmDate,
-    //   desc
-    // }
+    const allPost = {
+      ...post,
+      userId:userInfo[2],
+      date:confirmDate,
+      desc
+    }
 
-    // console.log(allPost)
+    console.log(allPost)
     // handleSend(allPost)
   }
 
