@@ -79,3 +79,6 @@ Content-Type:  application/json
     "date":"2/4/2001",
     "file":""
 }
+
+###
+GET  https://blogserverapi.up.railway.app/api/getAll

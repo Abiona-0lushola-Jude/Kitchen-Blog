@@ -4,7 +4,7 @@ import { userContext } from '../Hooks/UserContext'
 
 const Register = () => {
 
-    const {registerUser, error, errMessage, userInfo} = useContext(userContext)
+    const {registerUser, error, errMessage} = useContext(userContext)
 
   const [ user, setUser] = useState({
     username:"",
