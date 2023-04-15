@@ -31,7 +31,6 @@ export default function Write() {
   const [ post, setPost] = useState({
     title:"",
     keyword:"",
-    file:"",
   })
 
   const [desc, setDesc] = useState('')
@@ -48,40 +47,34 @@ export default function Write() {
     })
   }
 
+  const [file, setFile] = useState(null);
 
-  // console.log(userInfo)
-  // const upload = async ()=>{
-  //   try {
-
-  //   const form = new FormData()
-  //   form.append("image", post.file)
-  //   const res = await axios.post('http://localhost:5000/upload', form)
-  //   console.log(res)
-
-  //   } catch (err) {
-  //     console.log(err.message)
-
-  //   }
-  // }
+  const handleFileChange = (event) => {
+    setFile(event.target.value);
+    // console.log(event.target.files[0].name)
+  };
 
 
-
-  function handleSubmit(e){
+  async function handleSubmit(e){
     e.preventDefault()
 
-      if(userInfo=== null){
-        return navigate('/register')
-      }
+    //   if(userInfo=== null){
+    //     return navigate('/register')
+    //   }
 
-    const allPost = {
-      ...post,
-      userId:userInfo[2],
-      date:confirmDate,
-      desc
-    }
+    // const allPost = {
+    //   ...post,
+    //   userId:userInfo[2],
+    //   date:confirmDate,
+    //   desc
+    // }
 
-    console.log(allPost)
-    // handleSend(allPost)
+    // console.log(allPost)
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await axios.post('/upload', formData);
+    
+    console.log(response.data.imageUrl)
   }
 
 
@@ -99,7 +92,7 @@ export default function Write() {
           />
           
           <label htmlFor="file" className='filename'>Upload image</label>
-          <input type="file" name="file" id="file" className='file' value={post.file}  onChange={handleChange}
+          <input type="file" name="file" id="file" className='file' value={file}  onChange={handleFileChange}
           />
           <button className='btn' onClick={handleSubmit}>Post</button>
         </form>

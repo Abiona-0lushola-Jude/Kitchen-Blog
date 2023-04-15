@@ -7,6 +7,7 @@ const changeRouter = require('./Routes/ChangeRoute')
 const blogRoute = require('./Routes/blogRoute')
 const multer = require('multer')
 const cookieParser = require('cookie-parser')
+const path = require('path')
 
 
 
@@ -18,7 +19,7 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({extended : false}))
 app.use(cookieParser())
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 
   const storage = multer.diskStorage({
@@ -26,16 +27,18 @@ app.use(cookieParser())
       cb(null, './upload/')
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now+file.originalname)
+      cb(null, Date.now+`-`+file.originalname)
     }
+
   });
 
 
  const upload = multer({ storage: storage });
 
- app.post('/upload', upload.single('image'), (req, res) => {
+ app.post('/upload', upload.single('image'),async(req, res) => {
     try {
-      res.json({message :res.body})
+      const imageUrl = await `/uploads/${req.file.filename}`;
+      await res.json({ imageUrl });
     } catch (err) {
       res.json({message:err.message})
     }
