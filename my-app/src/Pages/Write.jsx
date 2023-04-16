@@ -3,12 +3,12 @@ import Topnav from './Topnav'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState } from 'react';
-import { useContext } from 'react';
-import { blogContext } from '../Hooks/BlogContext';
-import { userContext } from '../Hooks/UserContext';
+// import { useContext } from 'react';
+// import { blogContext } from '../Hooks/BlogContext';
+// import { userContext } from '../Hooks/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-var FormData = require('form-data')
+// var FormData = require('form-data')
 
 export default function Write() {
 
@@ -20,11 +20,11 @@ export default function Write() {
 
   const newdate = [moment,month,year]
 
-  const confirmDate = newdate.join('/')
+  // const confirmDate = newdate.join('/')
   // console.log(moment,month,year)
 
-  const {handleSend} =useContext(blogContext)
-  const {userInfo} = useContext(userContext)
+  // const {handleSend} =useContext(blogContext)
+  // const {userInfo} = useContext(userContext)
 
   const navigate  = useNavigate()
 
@@ -49,9 +49,8 @@ export default function Write() {
 
   const [file, setFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.value);
-    // console.log(event.target.files[0].name)
+  const handleFileChange =async  (event) => {
+    await setFile(event.target.files[0]);
   };
 
 
@@ -92,7 +91,7 @@ export default function Write() {
           />
           
           <label htmlFor="file" className='filename'>Upload image</label>
-          <input type="file" name="file" id="file" className='file' value={file}  onChange={handleFileChange}
+          <input type="file" name="file" id="file" className='file' value={file}  onChange={(e)=> handleFileChange(e)}
           />
           <button className='btn' onClick={handleSubmit}>Post</button>
         </form>

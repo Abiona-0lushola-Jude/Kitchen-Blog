@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 
 
-
+app.use(express.static(path.join(__dirname, 'public')));
 // middlewares
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -19,7 +19,7 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({extended : false}))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 
   const storage = multer.diskStorage({
