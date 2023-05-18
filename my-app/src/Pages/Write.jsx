@@ -1,18 +1,23 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import Topnav from './Topnav'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState } from 'react';
-// import { useContext } from 'react';
-// import { blogContext } from '../Hooks/BlogContext';
-// import { userContext } from '../Hooks/UserContext';
+import { blogContext } from '../Hooks/BlogContext';
+import { userContext } from '../Hooks/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
+import { Storage } from '../Firebase/Storage';
 import axios from 'axios';
 // var FormData = require('form-data')
 
 export default function Write() {
 
- 
+ const {userInfo} = useContext(userContext)
+ const {setBlog} = useContext(blogContext)
+
+  // console.log(userInfo)
+
   const day = new Date()
   const moment = day.getDate()
   const month = day.getMonth()
@@ -20,13 +25,8 @@ export default function Write() {
 
   const newdate = [moment,month,year]
 
-  // const confirmDate = newdate.join('/')
-  // console.log(moment,month,year)
-
-  // const {handleSend} =useContext(blogContext)
-  // const {userInfo} = useContext(userContext)
-
-  const navigate  = useNavigate()
+  const confirmDate = newdate.join('/')
+ 
 
   const [ post, setPost] = useState({
     title:"",
@@ -47,34 +47,60 @@ export default function Write() {
     })
   }
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState([]);
+  const [imageUrl, setImageUrl] = useState([])
 
-  const handleFileChange =async  (event) => {
-    await setFile(event.target.files[0]);
-  };
 
+
+  const imagePath = ref(Storage, 'images/')
+
+  const handleGetUrl = async () =>{
+
+      const IamgeRef = ref(Storage, `images/${file.name+post?.title}`)
+      const url  = await uploadBytes(IamgeRef, file)
+      // console.log(imageUrl, url)
+      const toGetImage =  await listAll(imagePath)
+      const image = await toGetImage.items.forEach(async (item)=>{
+      const urlSet = await getDownloadURL(item)
+      await setImageUrl(urlSet)
+    })
+  }
+
+ 
 
   async function handleSubmit(e){
+
+    
     e.preventDefault()
-
-    //   if(userInfo=== null){
-    //     return navigate('/register')
-    //   }
-
-    // const allPost = {
-    //   ...post,
-    //   userId:userInfo[2],
-    //   date:confirmDate,
-    //   desc
+    await handleGetUrl()
+    // if (!file || !post.title || !desc ){
+    //   return
     // }
 
-    // console.log(allPost)
-    const formData = new FormData();
-    formData.append('image', file);
-    const response = await axios.post('/upload', formData);
-    
-    console.log(response.data.imageUrl)
+    const  insertedPost = {
+      title: post.title,
+      desc: desc,
+      file: imageUrl,
+      date: confirmDate,
+      user_id: userInfo[2],
+      username: userInfo[0]
+    }
+
+    // const postedAll = await axios.post('/', insertedPost)
+    // await setBlog(prev=> {
+    //   return[
+    //     ...prev,
+    //     postedAll
+    //   ]
+    // })
+
+
+
+    console.table(insertedPost)
+
+
   }
+    
 
 
 
@@ -91,7 +117,7 @@ export default function Write() {
           />
           
           <label htmlFor="file" className='filename'>Upload image</label>
-          <input type="file" name="file" id="file" className='file' value={file}  onChange={(e)=> handleFileChange(e)}
+          <input type="file" name="file" id="file" className='file'  onChange={(e)=> setFile(e.target.files[0])}
           />
           <button className='btn' onClick={handleSubmit}>Post</button>
         </form>

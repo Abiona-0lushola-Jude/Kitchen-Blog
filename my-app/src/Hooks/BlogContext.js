@@ -28,7 +28,7 @@ export default function BlogContext({children}) {
     }
 
   return (
-    <blogContext.Provider value={{error, blog, handleSend}}>
+    <blogContext.Provider value={{error, blog, handleSend, setBlog}}>
         {children}
     </blogContext.Provider>
   )
