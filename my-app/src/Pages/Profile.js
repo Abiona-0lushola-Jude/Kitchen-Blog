@@ -39,9 +39,8 @@ const Profile = () => {
 
 
     async function handleDelete(id){
-        // console.log(`Deleted the blog at id ${id}`)
-        // const res = await axios.delete(`http://localhost:5000/api/delete/${id}`)
-        // blogUser.filter(el.blog_id === id setBlogUser())
+        console.log(`Deleted the blog at id ${id}`)
+        const res = await axios.delete(`http://localhost:5000/api/deleteBlog/${id}`)
     }
 
 
@@ -86,7 +85,7 @@ const Profile = () => {
                     return(
                         <div key={i} className="contain">
                             <div className="userBlog-img">
-                                <img className='img' src={menu} alt="" />
+                                <img className='img' src={el.file? el.file : menu} alt="" />
                             </div>
                             <div className="userBlog">
                                 <h1>{el.title}</h1>

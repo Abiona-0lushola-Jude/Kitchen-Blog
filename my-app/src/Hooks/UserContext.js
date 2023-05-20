@@ -35,7 +35,7 @@ const [blogUser, setBlogUser] = useState()
     async function loginUser(details){
           try {
           const res = await axios.post('/api/login', details)
-          await setUsers([res.data[0].username, res.data[0].email, res.data[0].users_id])  
+          await setUsers([res?.data[0].username, res?.data[0].email, res?.data[0].users_id])  
           await setError(false)
           await setErrMessage('')
           await navigate('/home')

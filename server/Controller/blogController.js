@@ -30,7 +30,7 @@ module.exports = {
 
     postOneBlog: async (req, res) => {
 
-        const userId = req.body.userId
+        const userId = req.body.user_id
         const title = req.body.title
         const desc = req.body.desc
         const date = req.body.date

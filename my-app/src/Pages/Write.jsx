@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import Topnav from './Topnav'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -6,17 +6,17 @@ import { useState } from 'react';
 import { blogContext } from '../Hooks/BlogContext';
 import { userContext } from '../Hooks/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, list, listAll, ref, uploadBytes } from 'firebase/storage';
 import { Storage } from '../Firebase/Storage';
 import axios from 'axios';
-// var FormData = require('form-data')
 
 export default function Write() {
 
+  const navigate = useNavigate()
  const {userInfo} = useContext(userContext)
  const {setBlog} = useContext(blogContext)
 
-  // console.log(userInfo)
+  console.log(userInfo)
 
   const day = new Date()
   const moment = day.getDate()
@@ -55,12 +55,10 @@ export default function Write() {
   const imagePath = ref(Storage, 'images/')
 
   const handleGetUrl = async () =>{
-
       const IamgeRef = ref(Storage, `images/${file.name+post?.title}`)
-      const url  = await uploadBytes(IamgeRef, file)
-      // console.log(imageUrl, url)
-      const toGetImage =  await listAll(imagePath)
-      const image = await toGetImage.items.forEach(async (item)=>{
+      await uploadBytes(IamgeRef, file)
+      const toGetImage =  await list(imagePath)
+      await toGetImage.items.forEach(async (item)=>{
       const urlSet = await getDownloadURL(item)
       await setImageUrl(urlSet)
     })
@@ -70,33 +68,34 @@ export default function Write() {
 
   async function handleSubmit(e){
 
-    
     e.preventDefault()
+
+    if(!userInfo){
+      return navigate('/login')
+    }
+
     await handleGetUrl()
-    // if (!file || !post.title || !desc ){
-    //   return
-    // }
+    
+    
 
     const  insertedPost = {
       title: post.title,
       desc: desc,
-      file: imageUrl,
+      file: await imageUrl,
       date: confirmDate,
       user_id: userInfo[2],
       username: userInfo[0]
     }
 
-    // const postedAll = await axios.post('/', insertedPost)
-    // await setBlog(prev=> {
-    //   return[
-    //     ...prev,
-    //     postedAll
-    //   ]
-    // })
+    const postedAll = await axios.post('/api/postBlog', insertedPost)
+    await setBlog(prev=> {
+      return[
+        ...prev,
+        insertedPost
+      ]
+    })
 
-
-
-    console.table(insertedPost)
+    await !file && navigate('/allBlog')
 
 
   }

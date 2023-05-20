@@ -82,3 +82,7 @@ Content-Type:  application/json
 
 ###
 GET  https://blogserverapi.up.railway.app/api/getAll
+
+
+###
+DELETE  http://localhost:5000/api/deleteBlog/8
