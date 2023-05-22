@@ -1,6 +1,5 @@
 import React from 'react'
 import Topnav from './Topnav'
-import pic from '../Style/image-jeanette.jpg'
 import { useNavigate } from 'react-router-dom'
 import Footer from './Footer'
 import { useContext } from 'react'
@@ -15,8 +14,6 @@ const Pages = () => {
   const {blog}  = useContext(blogContext)
 
     function handleMore(id,user){
-      // console.log(id,user)
-      // user = user1
       navigate(`/fullBlog/${user}/${id}`)
     }
 
@@ -30,9 +27,6 @@ const Pages = () => {
       const doc = new DOMParser().parseFromString(html, "text/html")
       return doc.body.textContent
     }
-
-
-    console.log(blog)
 
   return (
     <div className='container'>
@@ -59,7 +53,7 @@ const Pages = () => {
                                   
                   <div className="user-file">
                     <div className="user-img" onClick={()=> handleClick(el.user_id, el.username)}>
-                      <img src={pic} alt="pic" />
+                      <h1>{el.username.split('')[0].toUpperCase()}</h1>
                     </div>
                     <div className="user-detail">
                       <p className="username">{el.username}</p>

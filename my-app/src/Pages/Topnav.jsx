@@ -14,6 +14,8 @@ function Topnav() {
     const {search, setSearch} = useContext(searchContext)
     const [open, setOpen] = useState(false)
 
+    const imageLetter = userInfo && userInfo[0]?.split('')[0].toUpperCase()
+
 
     function HandleProfile(){
         getUser(userInfo[2])
@@ -57,7 +59,7 @@ function Topnav() {
                 {userInfo ? 
                 <>
                     <div className="user-img" onClick={HandleProfile}>
-                        <img src={pic} alt="" />
+                        <h1>{imageLetter}</h1>
                     </div>
                     <p className="user-name">{userInfo[0]}</p>
                     <button className="logout" onClick={temporalLogout}>Logout</button>

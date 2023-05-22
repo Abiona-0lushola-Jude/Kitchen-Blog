@@ -18,7 +18,8 @@ export default function OneFullBlog() {
     const {getUser}  = useContext(userContext)
 
     const location = window.location.href
-    const words = location.split('')
+    const words = location.split('/')
+
     const blogId = words[words.length -1]
     var newPost 
     
@@ -27,6 +28,8 @@ export default function OneFullBlog() {
             newPost = el
         }
     })
+
+    // console.log(newPost)
 
     
     function handleClick(user){
@@ -40,6 +43,7 @@ export default function OneFullBlog() {
         return doc.body.textContent
     }
 
+
   return (
     <div className='container'>
         <div className="head">
@@ -48,11 +52,11 @@ export default function OneFullBlog() {
         <div className="fullPost">
             <div className="postImg">
                 <div className="dataImg">
-                    <img src={menu} alt="" />
+                    <img src={newPost.file? newPost.file : menu} alt="" />
                 </div>
                 <div className="userInfo">
                     <div className="postUserImg" onClick={()=> handleClick(newPost.user_id)}>
-                        <img src={pic} alt="user portait" />
+                    <h1>{newPost.username.split('')[0].toUpperCase()}</h1>
                     </div>
                     <div className="postUserInfo">
                         <p>{newPost.username}</p>

@@ -16,9 +16,8 @@ const Profile = () => {
 
     const navigate = useNavigate()
 
-    function backGroundChnage(){
-        
-    }
+    const imageLetter = userInfo && userInfo[0]?.split('')[0]
+    // console.log(imageLetter.toUpperCase())
 
     const [onEdit, setOnEdit] = useState(false)
     const [confirmPass, setConfirmPass] = useState(false)
@@ -64,7 +63,7 @@ const Profile = () => {
                 <div className="head">
                     {username === userName && <h1>Welcome, {userName}</h1>}
                     <div className="img">
-                        <img src={pic} alt="user" />
+                        <h1>{imageLetter}</h1>
                     </div>
                 </div>
                 <div className="detail">

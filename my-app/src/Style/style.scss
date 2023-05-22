@@ -62,13 +62,11 @@
                     .user-img{
                         width: 3rem;
                         height: 3rem;
-                       
-    
-                        img{
-                            width: 100%;
-                            height: 100%;
-                            border-radius: 50%;
-                        }
+                        display: flex;
+                        justify-content: center;
+                        background-color: purple;
+                        color: white;
+                        border-radius: 50%;
                     }
     
                     button{
@@ -249,12 +247,13 @@
                     height: 2.8rem;
                     border-radius: 50%;
                     cursor: pointer;
-
-                    img{
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 50%;
-                    }
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: purple;
+                    color: white;
+                    text-align: center;
+                    
                 }
 
                 .user-detail{
@@ -357,11 +356,12 @@
 
             .dataImg{
                 width: 20rem;
-                height: inherit;
+                height: 20rem;
 
                 img{
                     width: 100%;
                     height: 100%;
+
                 }
 
             }
@@ -372,8 +372,15 @@
                 
                 .postUserImg{
                     width: 5rem;
-                    height: inherit;
+                    height: 5rem;
                     margin-bottom: .4rem;
+                    background-color: purple;
+                    color: white;
+                    border-radius: 50%;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
                     img{
                         width: 100%;
@@ -458,14 +465,13 @@
                     width: 7rem;
                     height: 7rem;
                     border-radius: 50%;
-                    border: 3px solid whitesmoke;
+                    background-color: purple;
                     margin-block: .6rem;
-
-                     img{
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 50%;
-                    }
+                    color: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 1.7rem;
                 }
             }
 
@@ -1003,6 +1009,8 @@
                     .postUserImg{
                         width: 4rem;
                         height: 4rem;
+                        background-color: purple;
+                        color: white;
                     }
                 }
             }
