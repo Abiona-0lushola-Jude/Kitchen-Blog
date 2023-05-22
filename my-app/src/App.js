@@ -11,6 +11,7 @@ import Search from './Pages/Search'
 import EditBlog from './Pages/EditBlog'
 import axios from 'axios';
 import TestingImage from './Firebase/TestingImage';
+import PageNotFound from './Pages/PageNotFound';
 
 function App() {
 
@@ -32,7 +33,7 @@ axios.defaults.baseURL = "http://localhost:5000"
         <Route path='edit/:id' element={<EditBlog />} />
         <Route path='/search' element={< Search />} />
         <Route path='/allBlog/more' element={<Pages />} />
-        <Route path='/*' element={"THIS PAGE CANNOT BE FOUND!!!!"} />
+        <Route path='/*' element={<PageNotFound />} />
         <Route path='/testing' element={<TestingImage />} />
       </Routes>
       

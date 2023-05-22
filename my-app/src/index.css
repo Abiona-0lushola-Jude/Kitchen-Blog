@@ -19,3 +19,10 @@ code {
     monospace;
 }
 
+.noPage{
+  display: flex;
+  height: 60rem;
+  align-items: center;
+  justify-content: center;
+
+}
