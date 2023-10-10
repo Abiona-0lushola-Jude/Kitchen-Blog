@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Topnav from './Topnav'
 import menu from '../Style/menu-5 1.jpg'
 import pic from '../Style/image-jeanette.jpg'
@@ -10,24 +10,25 @@ import {BsTwitter, BsGlobe} from 'react-icons/bs'
 import {GrLinkedinOption} from 'react-icons/gr'
 import {FaFacebookF} from 'react-icons/fa'
 
-
 export default function OneFullBlog() {
 
     const navigate = useNavigate()
     const {blog} = useContext(blogContext)
     const {getUser}  = useContext(userContext)
-
+    const [newPost, setNewPost] = useState(null)
     const location = window.location.href
     const words = location.split('/')
 
     const blogId = words[words.length -1]
-    var newPost 
     
-    blog.map((el)=> {
-        if(el.blog_id === Number(blogId)){
-            newPost = el
-        }
-    })
+    useEffect(()=>{
+        blog.map((el)=> {
+                if(el.blog_id === Number(blogId)){
+                    setNewPost(el)
+                }
+        })
+    }, [])
+    
 
     // console.log(newPost)
 
@@ -44,15 +45,17 @@ export default function OneFullBlog() {
     }
 
 
+    console.log(newPost, blog)
+
   return (
     <div className='container'>
         <div className="head">
             <Topnav />
         </div>
-        <div className="fullPost">
+        {!newPost ? "Loading...." : <div className="fullPost">
             <div className="postImg">
                 <div className="dataImg">
-                    <img src={newPost.file? newPost.file : menu} alt="" />
+                    <img src={newPost.file? "../../public"+newPost.file : menu} alt="main" />
                 </div>
                 <div className="userInfo">
                     <div className="postUserImg" onClick={()=> handleClick(newPost.user_id)}>
@@ -77,7 +80,7 @@ export default function OneFullBlog() {
                     <button onClick={()=> navigate(-1)}>Back</button>
                 </div>
             </div>          
-        </div>
+        </div>}
     </div>
   )
 }

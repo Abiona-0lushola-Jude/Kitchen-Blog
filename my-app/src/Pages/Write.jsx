@@ -6,8 +6,6 @@ import { useState } from 'react';
 import { blogContext } from '../Hooks/BlogContext';
 import { userContext } from '../Hooks/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { getDownloadURL, list, listAll, ref, uploadBytes } from 'firebase/storage';
-import { Storage } from '../Firebase/Storage';
 import axios from 'axios';
 
 export default function Write() {
@@ -16,7 +14,7 @@ export default function Write() {
  const {userInfo} = useContext(userContext)
  const {setBlog} = useContext(blogContext)
 
-  console.log(userInfo)
+  // console.log(userInfo)
 
   const day = new Date()
   const moment = day.getDate()
@@ -48,44 +46,40 @@ export default function Write() {
   }
 
   const [file, setFile] = useState([]);
-  const [imageUrl, setImageUrl] = useState([])
+  const [imageUrl, setImageUrl] = useState(null)
 
-
-
-  const imagePath = ref(Storage, 'images/')
 
   const handleGetUrl = async () =>{
-      const IamgeRef = ref(Storage, `images/${file.name+post?.title}`)
-      await uploadBytes(IamgeRef, file)
-      const toGetImage =  await list(imagePath)
-      await toGetImage.items.forEach(async (item)=>{
-      const urlSet = await getDownloadURL(item)
-      await setImageUrl(urlSet)
-    })
+    const formData = await new FormData()
+    await formData.append('image', file)
+    const {data} = await axios.post('/upload', formData)
+    await setImageUrl(data.imageUrl)
   }
 
- 
+//  console.log(imageUrl)
 
   async function handleSubmit(e){
-
+    
     e.preventDefault()
-
-    if(!userInfo){
-      return navigate('/login')
-    }
-
     await handleGetUrl()
+    // if(!userInfo){
+    //   return navigate('/login')
+    // }
+
+    
     
     
 
     const  insertedPost = {
       title: post.title,
       desc: desc,
-      file: await imageUrl,
+      file: imageUrl,
       date: confirmDate,
       user_id: userInfo[2],
       username: userInfo[0]
     }
+
+
 
     const postedAll = await axios.post('/api/postBlog', insertedPost)
     await setBlog(prev=> {
@@ -95,9 +89,11 @@ export default function Write() {
       ]
     })
 
-    await !file && navigate('/allBlog')
-
-
+    setBlog((prev)=> [
+      ...prev,
+      insertedPost
+    ])
+    // await navigate('/allBlog/more')
   }
     
 
@@ -115,10 +111,12 @@ export default function Write() {
           <ReactQuill theme="snow"  name="desc" id="desc"  className='desc' value={desc} onChange={setDesc}
           />
           
-          <label htmlFor="file" className='filename'>Upload image</label>
-          <input type="file" name="file" id="file" className='file'  onChange={(e)=> setFile(e.target.files[0])}
+          <label htmlFor="file" className='filename' style={{paddingBlock:"1rem", cursor:"pointer"}}>Upload image: 
+          <span className="imglink">{file?.name}</span>
+          </label>
+          <input type="file" style={{display:'none'}} name="file" id="file" className='file'  onChange={(e)=> setFile(e.target.files[0])}
           />
-          <button className='btn' onClick={handleSubmit}>Post</button>
+          <button className='btn' onClick={handleSubmit} disabled={!userInfo}>Post</button>
         </form>
         </div>
     </div>

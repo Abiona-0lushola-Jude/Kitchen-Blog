@@ -22,7 +22,6 @@ const Search = () => {
   // console.log()
 
   function handleMore(id,user){
-    console.log(id,user)
     navigate(`/fullBlog/${user}/${id}`)
   }
   
