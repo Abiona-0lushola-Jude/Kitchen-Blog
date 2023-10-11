@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Topnav from './Topnav'
 import menu from '../Style/menu-5 1.jpg'
-import pic from '../Style/image-jeanette.jpg'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { blogContext } from '../Hooks/BlogContext'
@@ -9,6 +8,9 @@ import { userContext } from '../Hooks/UserContext'
 import {BsTwitter, BsGlobe} from 'react-icons/bs'
 import {GrLinkedinOption} from 'react-icons/gr'
 import {FaFacebookF} from 'react-icons/fa'
+
+import blogImg from "../uploads/1696992629831IMG_20190824_180135_057.JPG"
+
 
 export default function OneFullBlog() {
 
@@ -30,8 +32,6 @@ export default function OneFullBlog() {
     }, [])
     
 
-    // console.log(newPost)
-
     
     function handleClick(user){
 
@@ -45,8 +45,7 @@ export default function OneFullBlog() {
     }
 
 
-    console.log(newPost, blog)
-
+   
   return (
     <div className='container'>
         <div className="head">
@@ -55,7 +54,8 @@ export default function OneFullBlog() {
         {!newPost ? "Loading...." : <div className="fullPost">
             <div className="postImg">
                 <div className="dataImg">
-                    <img src={newPost.file? "../../public"+newPost.file : menu} alt="main" />
+                    <img src={`../${newPost?.file}`  }alt="main" title={newPost?.file} />
+                    {/* <img src={blogImg} alt="main" title="new image" /> */}
                 </div>
                 <div className="userInfo">
                     <div className="postUserImg" onClick={()=> handleClick(newPost.user_id)}>

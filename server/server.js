@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 
 
-app.use(express.static(path.join(__dirname, 'public')));
 // middlewares
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -23,25 +22,26 @@ app.use(cookieParser())
 
 
   const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './upload/')
+    destination:async (req, file, cb) => {
+     await cb(null, '../my-app/src/uploads')
     },
-    filename: function (req, file, cb) {
-      cb(null, Date.now+`-`+file.originalname)
+    filename: async (req, file, cb)=> {
+      await cb(null, Date.now()+file.originalname)
     }
 
   });
 
 
- const upload = multer({ storage: storage });
+ const upload = multer({ storage });
 
- app.post('/upload', upload.single('image'),async(req, res) => {
+ app.post('/upload', upload.single('image'), async(req, res) => {
     try {
-      const imageUrl = await `/uploads/${req.file.filename}`;
+      const imageUrl = await `uploads/${req.file.filename}`;
       await res.json({ imageUrl });
     } catch (err) {
-      res.json({message:err.message})
+      await res.json({message:err.message})
     }
+   
 });
 
 

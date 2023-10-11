@@ -8,6 +8,7 @@ import { userContext } from '../Hooks/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
 export default function Write() {
 
   const navigate = useNavigate()
@@ -56,7 +57,7 @@ export default function Write() {
     await setImageUrl(data.imageUrl)
   }
 
-//  console.log(imageUrl)
+ console.log(imageUrl)
 
   async function handleSubmit(e){
     
@@ -65,9 +66,6 @@ export default function Write() {
     // if(!userInfo){
     //   return navigate('/login')
     // }
-
-    
-    
     
 
     const  insertedPost = {
@@ -99,9 +97,12 @@ export default function Write() {
 
 
 
+
+
   return (
     <div className='container'>
       <Topnav />
+  
         <div className="postForm">
         <form >
           <label htmlFor="title">Title: </label>
