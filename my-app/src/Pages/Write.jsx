@@ -54,44 +54,45 @@ export default function Write() {
     const formData = await new FormData()
     await formData.append('image', file)
     const {data} = await axios.post('/upload', formData)
-    await setImageUrl(data.imageUrl)
+    await setImageUrl(await data.imageUrl)
   }
 
  console.log(imageUrl)
 
   async function handleSubmit(e){
-    
+
     e.preventDefault()
     await handleGetUrl()
-    // if(!userInfo){
-    //   return navigate('/login')
-    // }
+
+    if(!userInfo){
+      return navigate('/login')
+    }
+    try {
+        const  insertedPost = await {
+        title: post.title,
+        desc: desc,
+        file:imageUrl,
+        date: confirmDate,
+        user_id: userInfo[2],
+        username: userInfo[0]
+      }
+
+      const postedAll = await axios.post('/api/postBlog', insertedPost)
+      await setBlog(prev=> {
+        return[
+          ...prev,
+          insertedPost
+        ]
+      })
+      //  await navigate('/allBlog/more')
+    } catch (err) {
+      console.log(err.message)
+    }
     
 
-    const  insertedPost = {
-      title: post.title,
-      desc: desc,
-      file: imageUrl,
-      date: confirmDate,
-      user_id: userInfo[2],
-      username: userInfo[0]
-    }
+    
 
-
-
-    const postedAll = await axios.post('/api/postBlog', insertedPost)
-    await setBlog(prev=> {
-      return[
-        ...prev,
-        insertedPost
-      ]
-    })
-
-    setBlog((prev)=> [
-      ...prev,
-      insertedPost
-    ])
-    // await navigate('/allBlog/more')
+   
   }
     
 

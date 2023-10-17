@@ -9,7 +9,7 @@ import {BsTwitter, BsGlobe} from 'react-icons/bs'
 import {GrLinkedinOption} from 'react-icons/gr'
 import {FaFacebookF} from 'react-icons/fa'
 
-import blogImg from "../uploads/1696992629831IMG_20190824_180135_057.JPG"
+import blogImg from "../uploads/1697513593625127.0.0.1_5500_index.html (3).png"
 
 
 export default function OneFullBlog() {
@@ -44,7 +44,7 @@ export default function OneFullBlog() {
         return doc.body.textContent
     }
 
-
+    console.log(`../uploads/${newPost?.file}`)
    
   return (
     <div className='container'>
@@ -54,8 +54,9 @@ export default function OneFullBlog() {
         {!newPost ? "Loading...." : <div className="fullPost">
             <div className="postImg">
                 <div className="dataImg">
-                    <img src={`../${newPost?.file}`  }alt="main" title={newPost?.file} />
+                    {/* <img src={encodeURI(`../uploads/${newPost?.file}`)} alt="main" title={newPost?.file} /> */}
                     {/* <img src={blogImg} alt="main" title="new image" /> */}
+                    
                 </div>
                 <div className="userInfo">
                     <div className="postUserImg" onClick={()=> handleClick(newPost.user_id)}>

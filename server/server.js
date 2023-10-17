@@ -36,7 +36,7 @@ app.use(cookieParser())
 
  app.post('/upload', upload.single('image'), async(req, res) => {
     try {
-      const imageUrl = await `uploads/${req.file.filename}`;
+      const imageUrl = await `${req.file.filename}`;
       await res.json({ imageUrl });
     } catch (err) {
       await res.json({message:err.message})
